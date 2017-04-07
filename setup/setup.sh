@@ -3,16 +3,16 @@
 # config -- modify them
 ES_VERSION=2.4.4
 INSTALLATION_DIR=/opt
-CLUSTER_NAME=YOUR_CLUSTER_NAME
+CLUSTER_NAME=$1
 ALL_HOST=
-REGION="eu-west-1"
-TAG="customElasticSearch"
+export REGION="eu-west-1"
+export TAG="customElasticSearch"
 
 # other configs
 TEMP_DIR=/tmp
 HOST=$(hostname)
 
-# check hosts
+# check config
 if [ -z "$ALL_HOSTS" ]
   then
     # get host names from aws tags
@@ -22,6 +22,12 @@ if [ -z "$ALL_HOSTS" ]
   then
     echo "Please provide hostnames, example:"
     echo "ALL_HOST=\"host1\", \"host2\""
+    exit
+fi
+if [ -z "$CLUSTER_NAME" ]
+  then
+    echo "Please provide a cluster name, example:"
+    echo "./setup.sh <CLUSTER_NAME>"
     exit
 fi
 
@@ -42,16 +48,16 @@ mv elasticsearch.yml $INSTALLATION_DIR/elastic/config/
 cp config/start.sh $INSTALLATION_DIR/elastic/
 cp config/elastic /etc/init.d/
 
-# create user
-useradd elastic 
-chown -R elastic:elastic $INSTALLATION_DIR/elasticsearch-$ES_VERSION
-
 # install plugins
 cd $INSTALLATION_DIR/elastic
 bin/plugin install karmi/elasticsearch-paramedic/2.0
 bin/plugin install lmenezes/elasticsearch-kopf/2.x
 bin/plugin install license
 bin/plugin install -b marvel-agent
+
+# create user
+useradd elastic 
+chown -R elastic:elastic $INSTALLATION_DIR/elasticsearch-$ES_VERSION
 
 # install sysstat
 yum install -y sysstat
