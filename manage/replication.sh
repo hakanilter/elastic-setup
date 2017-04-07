@@ -4,7 +4,7 @@
 INDEX=$1
 if [ -z "$INDEX" ]
   then
-   echo "Please provide a host name"
+   echo "Please provide an index"
    exit
 fi
 
