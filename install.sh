@@ -4,13 +4,23 @@
 ES_VERSION=2.4.4
 INSTALLATION_DIR=/opt
 CLUSTER_NAME=YOUR_CLUSTER_NAME
+ALL_HOST=
 
 # other configs
 TEMP_DIR=/tmp
 HOST=$(hostname)
+
+# check hosts
 if [ -z "$ALL_HOSTS" ]
   then
-    ALL_HOSTS="[\"host1\", \"host2\", \"$HOST\"]"
+    # get host names from aws tags
+    ALL_HOSTS=$(./aws-hosts.sh)
+fi
+if [ -z "$ALL_HOSTS" ]
+  then
+    echo "Please provide hostnames, example:"
+    echo "ALL_HOST=\"host1\", \"host2\""
+    exit
 fi
 
 # install elastic

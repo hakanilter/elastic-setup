@@ -3,7 +3,7 @@ node.name: $HOST
 
 network.bind_host: $HOST
 network.publish_host: $HOST
-discovery.zen.ping.unicast.hosts: $ALL_HOSTS
+discovery.zen.ping.unicast.hosts: [$ALL_HOSTS]
 
 indices.memory.index_buffer_size: 30%
 indices.memory.min_index_buffer_size: 96mb
