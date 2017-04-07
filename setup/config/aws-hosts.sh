@@ -1,7 +1,5 @@
 #!/bin/sh
 
-REGION="eu-west-1"
-TAG="customElasticSearch"
 TMP_FILE=/tmp/ec2Info
 
 ec2-describe-instances --region $REGION --filter "instance-state-name=running" --filter "tag-value=$TAG" > $TMP_FILE
@@ -16,4 +14,5 @@ for instance in $instances; do
       hosts="$hosts,\"$instance\""
   fi
 done
+
 echo $hosts
