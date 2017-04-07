@@ -2,12 +2,11 @@
 
 # config
 ES_VERSION=2.4.4
-INSTALLATION_DIR=/home/hakanilter/dev/
-
-TEMP_DIR=/tmp
-
-# cluster config
+INSTALLATION_DIR=/opt
 CLUSTER_NAME=YOUR_CLUSTER_NAME
+
+# other configs
+TEMP_DIR=/tmp
 HOST=$(hostname)
 if [ -z "$ALL_HOSTS" ]
   then
