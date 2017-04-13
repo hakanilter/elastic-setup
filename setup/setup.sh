@@ -59,6 +59,16 @@ bin/plugin install -b marvel-agent
 useradd elastic 
 chown -R elastic:elastic $INSTALLATION_DIR/elasticsearch-$ES_VERSION
 
+# performance settings
+SECURITY_FILE=/etc/security/limits.conf
+echo "# Elasticsearch" >> $SECURITY_FILE
+echo "* soft nproc 65536" >> $SECURITY_FILE
+echo "* hard nproc 65536" >> $SECURITY_FILE
+echo "* soft nofile 65536" >> $SECURITY_FILE
+echo "* hard nofile 65536" >> $SECURITY_FILE
+echo "elastic soft memlock unlimited" >> $SECURITY_FILE
+echo "elastic hard memlock unlimited" >> $SECURITY_FILE
+
 # install sysstat
 yum install -y sysstat
 
