@@ -1,23 +1,19 @@
 #!/bin/sh
+sudo su
 
 # config -- modify them
 ES_VERSION=2.4.4
 INSTALLATION_DIR=/opt
 CLUSTER_NAME=$1
-ALL_HOST=
 export REGION="eu-west-1"
 export TAG="customElasticSearch"
 
 # other configs
 TEMP_DIR=/tmp
 HOST=$(hostname)
+ALL_HOSTS=$HOST
 
 # check config
-if [ -z "$ALL_HOSTS" ]
-  then
-    # get host names from aws tags
-    ALL_HOSTS=$(config/aws-hosts.sh)
-fi
 if [ -z "$ALL_HOSTS" ]
   then
     echo "Please provide hostnames, example:"
