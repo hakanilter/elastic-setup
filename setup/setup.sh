@@ -1,12 +1,10 @@
 #!/bin/sh
-sudo su
 
 # config -- modify them
 ES_VERSION=2.4.4
 INSTALLATION_DIR=/opt
 CLUSTER_NAME=$1
 export REGION="eu-west-1"
-export TAG="customElasticSearch"
 
 # other configs
 TEMP_DIR=/tmp
@@ -26,6 +24,9 @@ if [ -z "$CLUSTER_NAME" ]
     echo "./setup.sh <CLUSTER_NAME>"
     exit
 fi
+
+# remove existing setup
+rm -rf $INSTALLATION_DIR/elasticsearch-$ES_VERSION
 
 # install elastic
 wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/$ES_VERSION/elasticsearch-$ES_VERSION.tar.gz -P $TEMP_DIR/
@@ -67,5 +68,8 @@ echo "elastic hard memlock unlimited" >> $SECURITY_FILE
 
 # install sysstat
 yum install -y sysstat
+
+# set automatic start
+chkconfig elastic on
 
 echo "completed..."
